@@ -1,15 +1,41 @@
-import { Toaster } from 'react-hot-toast';
+import { lazy, Suspense } from 'react';
 import './App.scss';
-import Login from './modules/onBoard/login/login';
+import Home from './components/home/home';
+import Counter from 'components/count/counter';
+import UseMemoExample from 'components/useMemoExample/useMemoHook';
+// import ImageComponent from './components/imageLoading/imageLoading';
+const ImageLoading = lazy(
+  () => import('./components/lazyImageLoading/lazyImageLoading')
+);
+// const ImageLoad = lazy(() => import('./components/imageLoading/imageLoading'));
 
 function App(): JSX.Element {
   return (
     <div className="App">
-      <Toaster
-        containerStyle={{ zIndex: '100000000000000' }}
-        toastOptions={{ className: 'toasterStyles' }}
-      />
-      <Login />
+      <Home />
+      <Counter />
+      <br />
+      <UseMemoExample />
+      {/* <ImageComponent /> */}
+      <Suspense
+        fallback={
+          <p style={{ textAlign: 'center', fontSize: '16px', color: 'red' }}>
+            load image component....
+          </p>
+        }
+      >
+        <ImageLoading />
+      </Suspense>
+
+      {/* <Suspense
+        fallback={
+          <p style={{ textAlign: 'center', fontSize: '16px', color: 'red' }}>
+            Page load
+          </p>
+        }
+      >
+        <ImageLoad />
+      </Suspense> */}
     </div>
   );
 }
